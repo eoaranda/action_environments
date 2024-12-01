@@ -1,0 +1,63 @@
+# Workflow name
+name: Dynamic Workflow and Uploading Files
+
+# Triggers for the workflow
+on:
+  # Manual trigger using the workflow_dispatch event
+  workflow_dispatch:
+    inputs:
+        index_document:
+            description: 'Index Document'
+            required: true
+            default: 'index.html'
+        error_document:
+            description: 'Error Document'
+            required: true
+            default: 'error.html'
+
+env:
+    BUCKET_NAME: website-artifacts
+  
+jobs: # Jobs defined in the workflow
+  create-stack:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+   
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-session-token: ${{secrets.AWS_SESSION_TOKEN}}
+        aws-region: ${{vars.AWS_REGION}}
+
+    - name: Create CloudFormation Stack
+      uses: aws-actions/aws-cloudformation-github-deploy@v1 # GitHub Action to deploy CloudFormation stack from the github marketplace
+      with:
+        name: uda-artifact
+        template: uda_artifact.yml # Path to the CloudFormation template , in this case the template is in the root directory
+        no-fail-on-empty-changeset: "1"
+        
+    - name: Upload index.html to S3 Bucket
+      run: |
+        aws s3 cp index.html s3://${{env.BUCKET_NAME}}
+
+    - name: Upload error.html to S3 Bucket
+      run: |
+        aws s3 cp error.html s3://${{env.BUCKET_NAME}}
+
+    - name: Describe CloudFormation Stack
+      id: describe-stack-1
+      run: |
+        output=$(aws cloudformation describe-stacks --stack-name uda-artifact)
+        echo "Output: $output"
+        echo "$output" >> output.json
+    
+    - name: Show S3 bucket website URL
+      run: |
+        aws cloudformation describe-stacks \
+        --stack-name uda-artifact \
+        --query "Stacks[0].Outputs[?OutputKey=='WebsiteURL'].OutputValue" \
+        --output text
