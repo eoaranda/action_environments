@@ -19,11 +19,12 @@ jobs: # Jobs defined in the workflow
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-session-token: ${{secrets.AWS_SESSION_TOKEN}}
-        aws-region: us-east-1
+        aws-region: ${{vars.AWS_REGION}}
 
     - name: Create CloudFormation Stack
-      uses: aws-actions/aws-cloudformation-github-deploy@v1
+      uses: aws-actions/aws-cloudformation-github-deploy@v1 # GitHub Action to deploy CloudFormation stack from the github marketplace
       with:
         name: udatest
-        template: udatest.yml
+        template: udatest.yml # Path to the CloudFormation template , in this case the template is in the root directory
+        no-fail-on-empty-changeset: "1"
         
