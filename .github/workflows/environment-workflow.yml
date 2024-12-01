@@ -39,7 +39,7 @@ jobs:
         run: |
          echo "Deployed to staging environment"
 
-  production:
+  production_deploy:
     runs-on: ubuntu-latest
     needs: stage_deploy
     #this tells github actions to use the production environment
