@@ -5,6 +5,7 @@ name: create-cloudformation-stack
 on:
   # Manual trigger using the workflow_dispatch event
   workflow_dispatch:
+  
 jobs: # Jobs defined in the workflow
   create-stack:
     runs-on: ubuntu-latest

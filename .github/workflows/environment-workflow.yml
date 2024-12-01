@@ -1,5 +1,6 @@
 name: build-test-deploy_environments
 on:
+  # Manual trigger using the workflow_dispatch event
   workflow_dispatch:
   
 env:
