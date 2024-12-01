@@ -1,5 +1,5 @@
 # Workflow name
-name: Dynamic Workflow and Uploading Files
+name: Dynamic Workflow and Uploading Files # Workflow name that will be displayed in the GitHub UI
 
 # Triggers for the workflow
 on:
@@ -7,11 +7,11 @@ on:
   workflow_dispatch:
     inputs:
         index_document:
-            description: 'Index Document'
+            description: 'Index Document' # Description of the input that will be displayed in the GitHub UI
             required: true
             default: 'index.html'
         error_document:
-            description: 'Error Document'
+            description: 'Error Document'  # Description of the input that will be displayed in the GitHub UI
             required: true
             default: 'error.html'
 

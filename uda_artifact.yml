@@ -4,7 +4,7 @@ Resources:
   UdacityBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: web-artifacts-1 # this is the same name as the bucket name in the artifacts_workflow.yml
+      BucketName: website-artifacts # this is the same name as the bucket name in the artifacts_workflow.yml
       WebsiteConfiguration:
         IndexDocument: index.html
         ErrorDocument: error.html
