@@ -5,7 +5,7 @@ Resources:
   UdaBucket:
     Type: AWS::S3::Bucket #Create an S3 bucket
     Properties:
-      BucketName: uda-iye-bucket #name of the bucket
+      BucketName: uda-iye-bucket #name of the bucket very random in this case
       WebsiteConfiguration: #hold a static website
         IndexDocument: index.html 
         ErrorDocument: error.html
