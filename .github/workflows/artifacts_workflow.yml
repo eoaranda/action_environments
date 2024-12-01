@@ -42,11 +42,11 @@ jobs: # Jobs defined in the workflow
         
     - name: Upload index.html to S3 Bucket
       run: |
-        aws s3 cp index.html s3://${{env.BUCKET_NAME}}
+        aws s3 cp ./website/${{ github.event.inputs.index_document}} s3://$BUCKET_NAME/ --acl public-read
 
     - name: Upload error.html to S3 Bucket
       run: |
-        aws s3 cp error.html s3://${{env.BUCKET_NAME}}
+        aws s3 cp ./website/${{ github.event.inputs.error_document}} s3://$BUCKET_NAME/ --acl public-read
 
     - name: Describe CloudFormation Stack
       id: describe-stack-1
